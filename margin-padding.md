@@ -10,23 +10,25 @@ It’s one line of CSS that calms the eye immediately.
 
 
 ## Everything’s great, CSS is for babies anyway
-For a long time, I didn’t care about the differences between padding and margin.  are some basic rules I learned by trial and error over the time:
+
+For a long time, I didn’t really care too much about the differences between margin and padding. Nevertheless, I noticed these basic rules:
 
 1. padding
 	- An element with a ::background color:: or ::border:: needs whitespace inside
-
-(hier Planetenzeichnung: planet schaut sich selbst an)
+	
+		[ Planet illustration 1 ]
 
 2. margin
 	- An element  needs air to breathe ::outside:: of its body
 	
-(hier Planetenzeichnung: abstand zu den anderen Planeten)
+		[ Planet illustration 2 ]
 
 I applied margins as external properties, padding for introspective. It made sense for me. But often, I couldn’t find a rule and randomly used one of them.
 
 
 ##  The point where I got confused
-Visuelles Bsp
+
+[ Some visual example ]
 
 One of the cases I struggled with were headlines. Headlines and text often need a good amount of spacing between them.  `<h1>` comes with a default margin, which never seemed to help me in any way. 
 ```css
@@ -41,11 +43,11 @@ margin-top: 1em; margin-bottom: 1em; 🤨
 What did I do? 
 I wanted to maintain the spacing between two paragraphs, but not the first one. So I removed it with `p:first-of-type`. Now, the spacing would sit fine at least. Sigh.
 
-That’s not wrong, but it’s against the natural behavior of CSS. There’s a reason these elements have default margins – and not paddings!
+This approach is against the natural behavior of CSS. There’s a reason these elements have default margins – and not paddings!
 
 
 ## Use margins to your advantage!
-The key understanding here is to _really_ letting sink in what it means that margins can ::collapse::. I read it a lot of times but I never saw the advantage over paddings. But in reality, margins are really powerful and clever! Margins can communicate with each other. They shine when combined. Paddings, on the contrary, are stubborn cats that never change. And sometimes, this is exactly the behaviour we want.
+The key understanding here is to _really_ let sink in what it means that margins can **collapse**. I read it a lot of times but I never saw the advantage over paddings. But in reality, margins are really powerful and clever! Margins can communicate with each other. They shine when combined. Paddings, on the contrary, are stubborn cats that never change. And sometimes, this is exactly the behaviour we want.
 
 This is extremely helpful when building a design system or generally using a component-based approach, e.g. React or Vue. 
 
@@ -53,7 +55,7 @@ Imagine a complete component, having padding top and bottom. Now, a second compo
 
 [ Bild: 2 Komponenten mit zu großer Lücke ]
 
-If you use margins instead, ::only the biggest margin will be applied::. 
+If you use margins instead, **only the biggest margin will be applied**. 
 
 [ Bild: 2 Komponenten mit guter Lücke ]
 
