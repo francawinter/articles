@@ -1,23 +1,40 @@
 # React children 👶 💬
 
-React is great for building reusable components. Components often come in multiple variations; most of the time we can pass **props** to the component and all good.
+React is great for building reusable components. Components often come in multiple variations – most of the time we can pass **props** to the component and all good.
 ```js
-<Button color=red text="Click me! />
+<Button color="red" text="Click me!" />
 ```
 
-However, what if we build a component that doesn’t only change in style but also contains different JSX? This is often the case with interactive components like accordions, carousels or tabs.
+However, what if we build a component that doesn’t only change in style but also contains different JSX? This is often the case with interactive components like accordions, carousels and tabs or very big components.
+
+Image a `Post` component for a blog post. All posts look alike, but vary in content.
+
+The Post component could look like this:
+
+```js
+// Post.js
+export const Post = () => {
+  return (
+    <section>
+      <div>...Post content here...</div>
+      <a>See all posts</a>
+    </section>
+  );
+};
+```
 
 It is *possible* to create a property that contains all kind of XML like this:
 ```js
 // App.js
-<TabPanel
- roundedCorners="true"
- content={
-	<h1>A Heading</h1>
-	<p>Lot's of text</p>
- }
-/>
+<Post content={
+  <>
+    <h1>My first Post</h1>
+    <p>Some intro text</p>
+    <p>A paragaph</p>
+  </>
+}/>
 ```
+*Note: the empty `<>` tag is a Fragment.*
 
 It’s just that this solution doesn’t look simple and clean. It’s not that we want to pass certain properties to the component, it’s more that we want to **definde what’s inside**.  In this case, use React children!
 
@@ -25,42 +42,44 @@ You don’t pass children like a property, you place it **inside the component t
 
 ```js
 // App.js
-<TabPanel roundedCorners="true">
-	<h1>A Heading</h1>
-	<p>Lot's of text</p>
-</TabPanel>
+<Post>
+  <h1>My first Post</h1>
+  <p>Some intro text</p>
+  <p>A paragaph</p>
+</Post>
 ```
+*This looks somuch better!*
 
-You created your own XML tag `<TabPanel>` and filled it with standard tags. You can insert some of your own custom components as well! 
+You created your own component `<Post>` and filled it with XML tags. You can insert some of your own custom components as well!
 
-But – there’s one step to go. At the moment, the TabPanel component looks like this:
+But – we have to tweak the component itself a little. At the moment, the TabPanel component looks like this:
 ```js
-// TabPanel.js
-export const TabPanel = ({roundedCorners}) => ...
+// Post.js
+export const Post = () => { ... }
 ```
 
 As children are special properties, you don’t have to declare them when using the component, but you have to tell the component itself that children are welcome.
 
 ```js
 // TabPanel.js
-export const TabPanel = ({roundedCorners, children}) => ...
+export const Post = ({children}) => { ... } 
 ```
 
 In the next step, you have to define the exact location of your children inside the component’s XML structure:
 
 ```js
-// TabPanel.js
-export const TabPanel = ({roundedCorners, children}) => {
- return (
-	<section>
-		<div>{children}</div>
-		<div>Other stuff</div>
-  </section>
- )
-}
+// Post.js
+export const Post = ({ children }) => {
+  return (
+    <section>
+      <div>{children}</div>
+      <a>See all posts</a>
+    </section>
+  );
+};
 ```
 
-Everything you passed as children will be placed exactly in the place you want them to be. Children are often a set of smaller components or dynamic CMS content.
+Everything you passed as children will be placed exactly in the place you want them to be. In real projects, children are often a set of smaller components or dynamic CMS content.
 
 ## ⚠️ Caution
 Only use children if you can’t control the component’s content. If you know that a component always is based on the same structure, it’s better to pass string props for the heading, etc. Be as strict as possible.
