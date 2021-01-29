@@ -163,3 +163,8 @@ export const Post = ({ heading, children }) => {
   );
 };
 ```
+
+## Advanced case: Split up your children
+
+We can go even further and split our `Post` components in intro, main and outro.
+//TODO: make it happen :)
