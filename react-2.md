@@ -85,42 +85,51 @@ Only use children if you can’t control the component’s content. If you know 
 Also, don’t try to style the children. Don’t do this:
 ```js
 // App.js
-<TabPanel roundedCorners="true">
-	<h1 class="tab-panel__heading">A Heading</h1>
-	<p>Lot's of text</p>
-  <p>Lot's of text</p>
-</TabPanel>
+<Post>
+  <h1 className="post__heading">My first Post</h1>
+  <p>Some intro text</p>
+  <p>A paragaph</p>
+</Post>
 ```
+You don’t have a place to define that CSS class.
 
-You don’t have a place to define that CSS class. You several two options in this case. If the heading is used universally, you could create a Heading component:
-1. Create smaller components
+There are several options in this case:
+
+### 1. Create smaller components
+
+If the heading is used universally, you could create a Heading component:
+
 ```js
 // App.js
-<TabPanel roundedCorners="true">
-  <Heading>A heading</Heading>
-	<p>Lot's of text</p>
-	<p>Lot's of text</p>
-</TabPanel>
+<Post>
+  <Heading>My first Post</Heading>
+  <p>Some intro text</p>
+  <p>A paragaph</p>
+</Post>
 ```
 
-2. If you want to use a special `tab-panel__heading` class, the component itself is the right place to do this. Just pass the heading as a normal prop.
+### 2. Use props instead
+
+If you want to use a special `post__heading` class, the component itself is the right place to do this. Just pass the heading as a normal prop.
 ```js
 // App.js
-<TabPanel roundedCorners="true" heading="A heading">
-	<p>Lot's of text</p>
-	<p>Lot's of text</p>
-</TabPanel>
+<Post heading="My first Post">
+  <p>Some intro text</p>
+  <p>A paragaph</p>
+</Post>
 ```
 
 ```js
-// TabPanel.js
-export const TabPanel = ({roundedCorners, children, heading}) => {
- return (
-	<section>
-		<h1>{heading}</h1>
-		<div>{children}</div>
-		<div>Other stuff</div>
-  </section>
- )
-}
+// Post.js
+export const Post = ({ heading, children }) => {
+  return (
+    <section>
+      <div className="post">
+        <h1 className="post__heading">{heading}</h1>
+        {children}
+      </div>
+      <a>See all posts</a>
+    </section>
+  );
+};
 ```
