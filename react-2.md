@@ -133,3 +133,33 @@ export const Post = ({ heading, children }) => {
   );
 };
 ```
+
+### 3. Split component into smaller functions
+
+This is my advice if you want to style the children specifically and use more than one JSX tag.
+```js
+// App.js
+<Post heading="My first Post">
+  <p>Some intro text</p>
+  <p>A paragaph</p>
+</Post>
+```
+
+```js
+// Post.js
+const PostMain = ({ content }) => {
+  return <div className="post__main">{content}</div>;
+};
+
+export const Post = ({ heading, children }) => {
+  return (
+    <section>
+      <div className="post">
+        <h1 className="post__heading">{heading}</h1>
+        <PostMain content={children} />
+      </div>
+      <a>See all posts</a>
+    </section>
+  );
+};
+```
