@@ -23,7 +23,7 @@ export const Post = () => {
 };
 ```
 
-It is *possible* to create a property that contains all kind of XML like this:
+It is *possible* to create a property that contains all kind of JSX like this:
 ```js
 // App.js
 <Post content={
@@ -48,9 +48,9 @@ You don’t pass children like a property, you place it **inside the component t
   <p>A paragaph</p>
 </Post>
 ```
-*This looks somuch better!*
+*This looks so much better!*
 
-You created your own component `<Post>` and filled it with XML tags. You can insert some of your own custom components as well!
+You created your own component `<Post>` and filled it with JSX tags. You can insert some of your own custom components as well!
 
 But – we have to tweak the component itself a little. At the moment, the TabPanel component looks like this:
 ```js
@@ -58,14 +58,14 @@ But – we have to tweak the component itself a little. At the moment, the TabPa
 export const Post = () => { ... }
 ```
 
-As children are special properties, you don’t have to declare them when using the component, but you have to tell the component itself that children are welcome.
+As children are special properties, you don’t have to declare them when using the component, but you have to tell the component itself that children are welcome. The word "children" is a special word in the React world with a set meaning like "function" or "const".
 
 ```js
-// TabPanel.js
+// Post.js
 export const Post = ({children}) => { ... } 
 ```
 
-In the next step, you have to define the exact location of your children inside the component’s XML structure:
+In the next step, you have to define the children's location inside the component’s JSX structure:
 
 ```js
 // Post.js
@@ -79,10 +79,8 @@ export const Post = ({ children }) => {
 };
 ```
 
-Everything you passed as children will be placed exactly in the place you want them to be. In real projects, children are often a set of smaller components or dynamic CMS content.
-
 ## ⚠️ Caution
-Only use children if you can’t control the component’s content. If you know that a component always is based on the same structure, it’s better to pass string props for the heading, etc. Be as strict as possible.
+Only use children if you can’t control the component’s content. If you know that a component always will based on the same JSX structure, it’s better to pass string props for the heading, etc. Be as strict as possible.
 
 Also, don’t try to style the children. Don’t do this:
 ```js
