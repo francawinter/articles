@@ -9,6 +9,8 @@ However, what if we build a component that doesn’t only change in style but al
 
 Image a `Post` component for a blog post. All posts look alike, but vary in content.
 
+![alt text](./assets/react-children-01.png)
+
 The Post component could look like this:
 
 ```js
@@ -34,11 +36,11 @@ It is *possible* to create a property that contains all kind of JSX like this:
   </>
 }/>
 ```
-*Note: the empty `<>` tag is a Fragment.*
+*Note: the empty `<>` tag is a [Fragment](https://reactjs.org/docs/fragments.html#short-syntax).*
 
 It’s just that this solution doesn’t look simple and clean. It’s not that we want to pass certain properties to the component, it’s more that we want to **definde what’s inside**.  In this case, use React children!
 
-You don’t pass children like a property, you place it **inside the component tags** as if you would write plain old HTML.
+You don’t pass children like a property, you place it **inside the component tags** as if you'd write plain old HTML.
 
 ```js
 // App.js
@@ -52,13 +54,15 @@ You don’t pass children like a property, you place it **inside the component t
 
 You created your own component `<Post>` and filled it with JSX tags. You can insert some of your own custom components as well!
 
-But – we have to tweak the component itself a little. At the moment, the TabPanel component looks like this:
+![alt text](./assets/react-children-02.png)
+
+But – we have to tweak the component itself a little. At the moment, the Post component looks like this:
 ```js
 // Post.js
 export const Post = () => { ... }
 ```
 
-As children are special properties, you don’t have to declare them when using the component, but you have to tell the component itself that children are welcome. The word "children" is a special word in the React world with a set meaning like "function" or "const".
+As children are special properties, you don’t have to declare them when using the component, but you have to tell the component itself that children are welcome. The word `children` is a special word in the React world with a set meaning like `function` or `const`.
 
 ```js
 // Post.js
@@ -79,8 +83,10 @@ export const Post = ({ children }) => {
 };
 ```
 
+![alt text](./assets/react-children-03.png)
+
 ## ⚠️ Caution
-Only use children if you can’t control the component’s content. If you know that a component always will based on the same JSX structure, it’s better to pass string props for the heading, etc. Be as strict as possible.
+Only use children if you can’t control the component’s content. If you know that a component is always going to be based on the same JSX structure, it’s better to pass string props for the heading, etc. **Be as strict as possible.**
 
 Also, don’t try to style the children. Don’t do this:
 ```js
@@ -91,7 +97,7 @@ Also, don’t try to style the children. Don’t do this:
   <p>A paragaph</p>
 </Post>
 ```
-You don’t have a place to define that CSS class.
+You don’t have a place to define that CSS class. 
 
 There are several options in this case:
 
@@ -168,3 +174,8 @@ export const Post = ({ heading, children }) => {
 
 We can go even further and split our `Post` components in intro, main and outro.
 //TODO: make it happen :)
+
+---
+
+## Linklist
+- [React Fragments](https://reactjs.org/docs/fragments.html#short-syntax)
