@@ -1,17 +1,19 @@
 # React children 👶 💬
 
+## Use case
+
 React is great for building reusable components. Components often come in multiple variations – most of the time we can pass **props** to the component and all good.
 ```js
 <Button color="red" text="Click me!" />
 ```
 
-However, what if we build a component that doesn’t only change in style but also contains different JSX? This is often the case with interactive components like accordions, carousels and tabs or very big components.
+However, what if we build a component that doesn’t only change in style but also contains different JSX? This is often the case with complex, nested components like accordions, carousels and tabs or buttons with text and icon.
 
-Image a `Post` component for a blog post. All posts look alike, but vary in content.
+To keep it simple, imagine a `<Post />` component for a blog post. All posts look alike, but vary in content.
 
 ![alt text](./assets/react-children-01.png)
 
-The Post component could look like this:
+`Post` could look like this:
 
 ```js
 // Post.js
@@ -25,7 +27,7 @@ export const Post = () => {
 };
 ```
 
-It is *possible* to create a property that contains all kind of JSX like this:
+To use `Post` in `App.js` , it's *possible* to create a property, e.g. `content` that contains all kind of JSX like this:
 ```js
 // App.js
 <Post content={
@@ -40,6 +42,8 @@ It is *possible* to create a property that contains all kind of JSX like this:
 
 It’s just that this solution doesn’t look simple and clean. It’s not that we want to pass certain properties to the component, it’s more that we want to **definde what’s inside**.  In this case, use React children!
 
+## React children in action 👶
+
 You don’t pass children like a property, you place it **inside the component tags** as if you'd write plain old HTML.
 
 ```js
@@ -50,9 +54,9 @@ You don’t pass children like a property, you place it **inside the component t
   <p>A paragaph</p>
 </Post>
 ```
-*This looks so much better!*
+*This looks so much better! It feels like writing HTML with superpowers!* ✨
 
-You created your own component `<Post>` and filled it with JSX tags. You can insert some of your own custom components as well!
+You created your own component `<Post>` and filled it with JSX tags. You can insert custom React components as well!
 
 ![alt text](./assets/react-children-02.png)
 
@@ -62,7 +66,7 @@ But – we have to tweak the component itself a little. At the moment, the Post 
 export const Post = () => { ... }
 ```
 
-As children are special properties, you don’t have to declare them when using the component, but you have to tell the component itself that children are welcome. The word `children` is a special word in the React world with a set meaning like `function` or `const`.
+As children are special properties, you don’t have to declare them when using the component, but you have to tell the component itself that **children are welcome**. The word `children` is a special word in the React world with a set meaning like `function` or `const`.
 
 ```js
 // Post.js
@@ -84,6 +88,9 @@ export const Post = ({ children }) => {
 ```
 
 ![alt text](./assets/react-children-03.png)
+
+See this in action here:
+
 
 ## ⚠️ Caution
 Only use children if you can’t control the component’s content. If you know that a component is always going to be based on the same JSX structure, it’s better to pass string props for the heading, etc. **Be as strict as possible.**
@@ -192,6 +199,8 @@ We can go even further and split our `Post` components in intro, main and outro.
 </Post>
 ```
 
+`PostIntro`, `PostMain` and `PostOutro` are small, separate components that can be used as children inside the `Post` component.
+
 ```js
 // Post.js
 export const PostIntro = ({ children }) => {
@@ -223,8 +232,15 @@ export const Post = ({ heading, children }) => {
 };
 ```
 
+The `Post` component itself doesn't know which children will be passed. This is a simple example, but if your components contain a lot of logic / JSX, this is a way to separate concerns.
+
+![alt text](./assets/react-children-04.png)
+
 
 ---
 
 ## Linklist
+- [Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html)
 - [React Fragments](https://reactjs.org/docs/fragments.html#short-syntax)
+- [React function components](https://www.robinwieruch.de/react-function-component#react-function-component-props)
+
