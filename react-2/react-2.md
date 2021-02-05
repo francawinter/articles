@@ -172,8 +172,57 @@ export const Post = ({ heading, children }) => {
 
 ## Advanced case: Split up your children
 
-We can go even further and split our `Post` components in intro, main and outro.
-//TODO: make it happen :)
+We can go even further and split our `Post` components in intro, main and outro.😎
+
+```js
+// App.js
+<Post heading="My first Post">
+    <PostIntro>
+      <p>Some intro text</p>
+      <p>Intro paragaph</p>
+    </PostIntro>
+    <PostMain>
+      <p>The main text</p>
+      <p>Main paragaph</p>
+    </PostMain>
+    <PostOutro>
+      <p>Outro text</p>
+      <p>Outro paragaph</p>
+    </PostOutro>
+</Post>
+```
+
+```js
+// Post.js
+export const PostIntro = ({ children }) => {
+  return <div className="post__intro">{children}</div>;
+};
+
+export const PostMain = ({ children }) => {
+  return <div className="post__main">{children}</div>;
+};
+
+export const PostOutro = ({ children }) => {
+  return (
+    <div className="post__outro">
+      {children}
+      <a>See all posts</a>
+    </div>
+  );
+};
+
+export const Post = ({ heading, children }) => {
+  return (
+    <section>
+      <div className="post">
+        <h1 className="post__heading">{heading}</h1>
+        {children}
+      </div>
+    </section>
+  );
+};
+```
+
 
 ---
 
