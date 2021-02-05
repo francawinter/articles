@@ -232,10 +232,11 @@ export const Post = ({ heading, children }) => {
 };
 ```
 
-The `Post` component itself doesn't know which children will be passed. This is a simple example, but if your components contain a lot of logic / JSX, this is a way to separate concerns.
+The `Post` component itself ist "stupid" and doesn't know which children will be passed. This is a simple example, but if your components contain a lot of logic / JSX, this is a way to separate concerns.
 
 ![alt text](./assets/react-children-04.png)
 
+You can find the finished example on [CodeSandbox here](https://codesandbox.io/s/advanced-u1wmo?file=/src/Post/Post.js). Feel free to fork and play with it!
 
 ---
 
