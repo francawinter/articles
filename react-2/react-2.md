@@ -39,7 +39,7 @@ To use `Post` in `App.js` , it's *possible* to create a property, e.g. `content`
 ```
 *Note: the empty `<>` tag is a [Fragment](https://reactjs.org/docs/fragments.html#short-syntax).*
 
-See the [codesandbox example here](https://codesandbox.io/s/props-example-8mks2?file=/src/App.js).
+See the [CodeSandbox example here](https://codesandbox.io/s/props-example-8mks2?file=/src/App.js).
 
 It’s just that this solution doesn’t look simple and clean. It’s not that we want to pass certain properties to the component, it’s more that we want to **definde what’s inside**.  In this case, use React children!
 
@@ -81,6 +81,7 @@ In the next step, you have to define the children's location inside the componen
 export const Post = ({ children }) => {
   return (
     <section>
+      ...
       <div>{children}</div>
       ...
     </section>
@@ -90,7 +91,7 @@ export const Post = ({ children }) => {
 
 ![alt text](./assets/react-children-03.png)
 
-See the [codesandbox example here](https://codesandbox.io/s/children-example-5z93h?file=/src/App.js)
+See the [CodeSandbox example here](https://codesandbox.io/s/children-example-5z93h?file=/src/App.js)
 
 
 ## ⚠️ Caution
@@ -124,12 +125,12 @@ If the heading is used universally, you could create a Heading component:
 
 ### 2. Use props instead
 
-If you want to use a special `post__heading` class, the component itself is the right place to do this. Just pass the heading as a normal prop.
+If you want to use a special `post__heading` class, the `Post` component itself is the right place to do this. Just pass the heading as a normal prop.
 ```js
 // App.js
-<Post heading="My first Post">
-  <p>Some intro text</p>
-  <p>A paragaph</p>
+<Post heading="My first Post"> // Property
+  <p>Some intro text</p> // Children
+  <p>A paragaph</p> 
 </Post>
 ```
 
@@ -177,7 +178,7 @@ export const Post = ({ heading, children }) => {
   );
 };
 ```
-See it in action in [this codesandbox](https://codesandbox.io/s/split-component-into-smaller-functions-360eu?file=/src/Post/Post.js)
+See it in action in [this CodeSandbox](https://codesandbox.io/s/split-component-into-smaller-functions-360eu?file=/src/Post/Post.js)
 
 ## Advanced case: Split up your children
 
@@ -232,7 +233,7 @@ export const Post = ({ heading, children }) => {
 };
 ```
 
-The `Post` component itself ist "stupid" and doesn't know which children will be passed. This is a simple example, but if your components contain a lot of logic / JSX, this is a way to separate concerns.
+The `Post` component itself ist "stupid" and doesn't know which children will be passed. This is a simple example, but if your components contain a lot of logic and / or JSX, this is a way to separate concerns.
 
 ![alt text](./assets/react-children-04.png)
 
@@ -241,7 +242,6 @@ You can find the finished example on [CodeSandbox here](https://codesandbox.io/s
 ---
 
 ## Linklist
-- [Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html)
-- [React Fragments](https://reactjs.org/docs/fragments.html#short-syntax)
-- [React function components](https://www.robinwieruch.de/react-function-component#react-function-component-props)
-
+- [React Docs: Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html)
+- [React Docs: React Fragments](https://reactjs.org/docs/fragments.html#short-syntax)
+- [Robin Wieruch: React function components](https://www.robinwieruch.de/react-function-component#react-function-component-props)
