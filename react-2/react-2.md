@@ -13,7 +13,7 @@ To keep it simple, imagine a `<Post />` component for a blog post. All posts loo
 
 ![alt text](./assets/react-children-01.png)
 
-`Post` could look like this:
+The plain `Post` component could look like this:
 
 ```js
 // Post.js
@@ -21,7 +21,6 @@ export const Post = () => {
   return (
     <section>
       <div>...Post content here...</div>
-      <a>See all posts</a>
     </section>
   );
 };
@@ -39,6 +38,8 @@ To use `Post` in `App.js` , it's *possible* to create a property, e.g. `content`
 }/>
 ```
 *Note: the empty `<>` tag is a [Fragment](https://reactjs.org/docs/fragments.html#short-syntax).*
+
+See the [codesandbox example here](https://codesandbox.io/s/props-example-8mks2?file=/src/App.js).
 
 It’s just that this solution doesn’t look simple and clean. It’s not that we want to pass certain properties to the component, it’s more that we want to **definde what’s inside**.  In this case, use React children!
 
@@ -81,7 +82,7 @@ export const Post = ({ children }) => {
   return (
     <section>
       <div>{children}</div>
-      <a>See all posts</a>
+      ...
     </section>
   );
 };
@@ -89,7 +90,7 @@ export const Post = ({ children }) => {
 
 ![alt text](./assets/react-children-03.png)
 
-See this in action here:
+See the [codesandbox example here](https://codesandbox.io/s/children-example-5z93h?file=/src/App.js)
 
 
 ## ⚠️ Caution
@@ -176,10 +177,11 @@ export const Post = ({ heading, children }) => {
   );
 };
 ```
+See it in action in [this codesandbox](https://codesandbox.io/s/split-component-into-smaller-functions-360eu?file=/src/Post/Post.js)
 
 ## Advanced case: Split up your children
 
-We can go even further and split our `Post` components in intro, main and outro.😎
+We can go even further and split our `Post` components into intro, main and outro 😎
 
 ```js
 // App.js
@@ -189,12 +191,10 @@ We can go even further and split our `Post` components in intro, main and outro.
       <p>Intro paragaph</p>
     </PostIntro>
     <PostMain>
-      <p>The main text</p>
-      <p>Main paragaph</p>
+      ...
     </PostMain>
     <PostOutro>
-      <p>Outro text</p>
-      <p>Outro paragaph</p>
+      ...
     </PostOutro>
 </Post>
 ```
