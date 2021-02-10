@@ -1,6 +1,6 @@
 # React children 👶 💬
 
-## Use case
+## Use Case
 
 React is great for building reusable components. Components often come in multiple variations – most of the time we can pass **props** to the component and all good.
 ```js
@@ -9,9 +9,9 @@ React is great for building reusable components. Components often come in multip
 
 However, what if we build a component that doesn’t only change in style but also contains different JSX? This is often the case with complex, nested components like accordions, carousels and tabs or buttons with text and icon.
 
-To keep it simple, imagine a `<Post />` component for a blog post. All posts look alike, but vary in content.
+To keep it simple, imagine a `<Post />` component for a blog post. All posts look alike but vary in content.
 
-![alt text](./assets/react-children-01.png)
+![The Post.js component within App.js](./assets/react-children-01.png)
 
 The plain `Post` component could look like this:
 
@@ -41,9 +41,9 @@ To use `Post` in `App.js` , it's *possible* to create a property, e.g. `content`
 
 See the [CodeSandbox example here](https://codesandbox.io/s/props-example-8mks2?file=/src/App.js).
 
-It’s just that this solution doesn’t look simple and clean. It’s not that we want to pass certain properties to the component, it’s more that we want to **definde what’s inside**.  In this case, use React children!
+It’s just that this solution doesn’t look simple and clean. It’s not that we want to pass certain properties to the component, it’s more that we want to **define what’s inside**.  In this case, use React children!
 
-## React children in action 👶
+## React Children In Action 👶
 
 You don’t pass children like a property, you place it **inside the component tags** as if you'd write plain old HTML.
 
@@ -59,7 +59,7 @@ You don’t pass children like a property, you place it **inside the component t
 
 You created your own component `<Post>` and filled it with JSX tags. You can insert custom React components as well!
 
-![alt text](./assets/react-children-02.png)
+![The Post component consists of various different elements.](./assets/react-children-02.png)
 
 But – we have to tweak the component itself a little. At the moment, the Post component looks like this:
 ```js
@@ -89,7 +89,7 @@ export const Post = ({ children }) => {
 };
 ```
 
-![alt text](./assets/react-children-03.png)
+![Post.js contains fixed JSX tags as well as a space for flexible children.](./assets/react-children-03.png)
 
 See the [CodeSandbox example here](https://codesandbox.io/s/children-example-5z93h?file=/src/App.js)
 
@@ -110,7 +110,7 @@ You don’t have a place to define that CSS class.
 
 There are several options in this case:
 
-### 1. Create smaller components
+### 1. Create Smaller Components
 
 If the heading is used universally, you could create a Heading component:
 
@@ -123,7 +123,7 @@ If the heading is used universally, you could create a Heading component:
 </Post>
 ```
 
-### 2. Use props instead
+### 2. Use Props Instead
 
 If you want to use a special `post__heading` class, the `Post` component itself is the right place to do this. Just pass the heading as a normal prop.
 ```js
@@ -149,7 +149,7 @@ export const Post = ({ heading, children }) => {
 };
 ```
 
-### 3. Split component into smaller functions
+### 3. Split Component Into Smaller Functions
 
 This is my advice if you want to style the children specifically and use more than one JSX tag.
 ```js
@@ -180,7 +180,7 @@ export const Post = ({ heading, children }) => {
 ```
 See it in action in [this CodeSandbox](https://codesandbox.io/s/split-component-into-smaller-functions-360eu?file=/src/Post/Post.js)
 
-## Advanced case: Split up your children
+## Advanced Case: Split Up Your Children
 
 We can go even further and split our `Post` components into intro, main and outro 😎
 
@@ -233,9 +233,9 @@ export const Post = ({ heading, children }) => {
 };
 ```
 
-The `Post` component itself ist "stupid" and doesn't know which children will be passed. This is a simple example, but if your components contain a lot of logic and / or JSX, this is a way to separate concerns.
+The `Post` component itself is "stupid" and doesn't know which children will be passed. This is a simple example, but if your components contain a lot of logic and/or JSX, this is a way to separate concerns.
 
-![alt text](./assets/react-children-04.png)
+![Final relationship between App.js and Post.js](./assets/react-children-04.png)
 
 You can find the finished example on [CodeSandbox here](https://codesandbox.io/s/advanced-u1wmo?file=/src/Post/Post.js). Feel free to fork and play with it!
 
