@@ -1,4 +1,4 @@
-# React children 👶 💬
+# React children 👶 💬 – why, when, how
 
 ## Use Case
 
