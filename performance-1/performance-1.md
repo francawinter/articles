@@ -1,16 +1,16 @@
 # Thoughts about performance of CSS transitions
 
 ## Contents
-- what are css transitions
-- why care?
+- what are css transitions 🟡
+- why care? 🟡
     - personal regard -> tell a story!
-- how to implement?
-- Bonus
-- conclusion
+- how to implement? 🔴
+- Bonus: JS performance 🔴
+- conclusion 🔴
 
 ## Intro: Why use animation on a website?
 
-- One of the differents between a website and a book is that you can not only read a website, but also interact with it.
+- One of the differences between a website and a book is that you can not only read a website, but also interact with it.
 - We can build a interactive website without animations and it will be perfectly fine. Wikipedia, for example, barely uses animation.
 - But, with animation, we can improve User Experience (UX) of a website.
     - we can decide to animate these interactions so that feel a little bit more natural and intuitive to use. (needs example)
@@ -19,32 +19,38 @@
 
 ## What are CSS transitions?
 - CSS transitions are the easiest form of animation. You have an element with a state A that turns to state B.
-    - Think about a button that changes it's color slightly on hover.
+    - Think about a button that changes it's color on hover.
     - With one line of code, you can change the feeling of the interaction completely.
 - you might have seen code like this before:
 
 ```css
 .button {
-    color: black;
-    transition: 200ms background-color; /* smooth color animation! */
+	background-color: blue;
+	color: white;
+	transition: background-color 200ms, color 200ms;
 }
+
 .button:hover {
-    color: gray;
+	background-color: white;
+	color: blue;
 }
 ```
-TODO: real code example...
+Codepen: https://codepen.io/franca_/pen/xxRJozm?editors=1100
+
+TODO: Improve real code example...
 
 - BUT – every animation comes at a cost. The browser has to *work* to make animations happen. That's why Wikipedia is so fast - the browser doesn't have much to do.
 
 ## Why care about performance of CSS transitions? My Story
 - started professional frontend development
 - happily ever after used `transition: all` (for lazy people)
-- one day, a frontend dev specialized on performance saw my code and told me to NEVER use `transition: all`. It can be bad for performance.
+- one day, a frontend dev specialized on performance saw my code and told me to NEVER use `transition: all`. It would be bad for performance.
 - I started to research deeper into the performance of transtions
     - heard about rendering, CPU and GPU before, but:
         - quickly gave up on this
         - I don't regret it: it's a giant rabbit hole.
-    - but THIS time, years later, I cared more: A performant page needs less rendering = less energy consumption.
+    - but THIS time, years later, I cared more: A performant page needs less rendering = less energy consumption. 
+        - so even if a page feels fast enough, it's still a good idea to care about performance.
 - I won't dive into the technical aspect of browser rendering because it would really go beyond the scope of this article.
     - If you're interested, I recommend you the article series by Mariko Kosaka who works at Goole on Chrome. She's a truly inspiring woman, so you should check her out.
     - After my research, I recommend the following:
@@ -57,7 +63,7 @@ TODO: real code example...
 <br>
 <br>
 
-## What's different for opacity and transform?
+## What's so different about opacity and transform?
 
 - they only cause the browser to re-render *once*
 - both can be used as animation "hacks"
