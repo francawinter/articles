@@ -15,7 +15,7 @@
 - But, with animation, we can improve User Experience (UX) of a website.
     - we can decide to animate these interactions so that feel a little bit more natural and intuitive to use. (needs example)
 
-- As a frontend developer, there are many different ways to animate elements. You can animate with JS, but, if possible, use CSS (why?). You can get a long way with CSS transitions and keyframes. Personally, I almost never need to use anything else at work.
+- As a frontend developer, there are many different ways to animate elements. You can animate with JS, but, if possible, use CSS (why?). (Law of simplest technology) You can get a long way with CSS transitions and keyframes. Personally, I almost never need to use anything else at work.
 
 ## What are CSS transitions?
 - CSS transitions are the easiest form of animation. You have an element with a state A that turns to state B.
@@ -77,4 +77,133 @@ TODO: Improve real code example...
 - the element *seems* to be moving, but it's not *really* moving
     - layout doesn't change at all
     - because of that, layout doesn't have to be re-painted
+
+
+---
+## Real-world implementation
+
+This sounds grat in theory, but how do you animate with opacity and transform *only* ? Here's a real world example: A sticky header.
+
+### Our requirements
+- On scroll, the header has to be sticky but reduce its height to leave more space for the page content
+- A subtle shadow appears on scroll to delimit navigation from content
+
+### First version: brute force
+- animate CSS `height` or `padding` property from hardcoded value x to x - n.
+- animate CSS `box-shadow` from 0 to x.
+
+#### Brute force code example
+Codepen: https://codepen.io/franca_/pen/MWbQQar
+
+The important part, simplified:
+```css
+.header {
+    padding: 30px;
+	transition: padding 300s, box-shadow 300s;
+}
+
+/* Same HTML element, but class added with JS on scroll */
+.header--scrolling { 
+    padding: 10px;
+    box-shadow: 0 8px 40px 0 gray;
+}
+```
+
+#### What happens behind the scences?
+
+- Every frame, the browser's GPU (graphics processing unit) needs to render the transition's new state:
+
+[[ GPU visualization ]] ✅
+
+[[ GPU Video]] ✅
+
+### Second version: optimized for performance ✨
+
+Codepen: https://codepen.io/franca_/pen/yLVvvgv
+
+#### First step: box-shadow
+
+Initial situation: A transparent ::before element with a box-shadow ist placed just at the same place the header sits.
+```css
+.header {
+    ...
+}
+
+.header::before {
+	content: " ";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: 0; /* Hidden by default. */
+	box-shadow: 0 8px 40px 0 gray; /* 👈 Shadow! */
+}
+```
+
+We can then "fake animate" the box-shadow by simply setting the ::before element's opacity to 1;
+
+[[Visualization of ::before element ]] ✅
+
+```css
+.header {
+    ...
+}
+
+.header::before {
+	...
+	opacity: 0;
+	box-shadow: 0 8px 40px 0 gray;
+	transition: opacity 300s;
+}
+
+.header--scrolling::before {
+	opacity: 1; /* ✨ Reveal box shadow on scroll ✨ */
+}
+```
+
+#### Second step: height
+
+This one is a little tricky. You're lucky if you can just `scale` your header, but the header's content would be scaled as well. But, we can use the `transform` property to shift the header a little more to the top. Then, we have to shift *down* the header's content a little so that it still sits at the center.
+
+[[Visualization of header shifting]] ✅
+
+- on scroll, header is shifted upwards
+- on scroll, nav (which is header's content) is shifted a little bit downwards to be centered again
+
+```css
+.header {
+    padding: 30px;
+}
+
+.header--scrolling { 
+    transform: translateY(-20px);
+}
+
+.header--scrolling .nav {
+    transform: translateY(10px);
+}
+```
+
+In the last step, we animate the `transform` of header and nav:
+```css
+.header {
+    padding: 30px;
+    transition: transform 300s; /* Smooth transition upwards */
+}
+
+.header--scrolling { 
+    transform: translateY(-20px);
+}
+
+.nav {
+	transition: transform 300s; /* Smooth transition downwards */
+}
+
+.header--scrolling .nav {
+    transform: translateY(10px);
+}
+```
+
+
 
