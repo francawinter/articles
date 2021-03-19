@@ -1,119 +1,86 @@
 # Thoughts about performance of CSS transitions
 
-## Contents
-- what are css transitions 🟡
-- why care? 🟡
-    - personal regard -> tell a story!
-- how to implement? 🔴
-- Bonus: JS performance 🔴
-- conclusion 🔴
 
-## Intro: Why use animation on a website?
+## Intro: Why use animation on a website? 🤔
 
-- One of the differences between a website and a book is that you can not only read a website, but also interact with it.
-- We can build a interactive website without animations and it will be perfectly fine. Wikipedia, for example, barely uses animation.
-- But, with animation, we can improve User Experience (UX) of a website.
-    - we can decide to animate these interactions so that feel a little bit more natural and intuitive to use. (needs example)
+The great thing about websites is that we can interact with it – navigate, search, click, scroll, open. We don't *need* animation for user interactions – you can use Wikipedia just fine, even though it barely contains animations. 
 
-- As a frontend developer, there are many different ways to animate elements. You can animate with JS, but, if possible, use CSS (why?). (Law of simplest technology) You can get a long way with CSS transitions and keyframes. Personally, I almost never need to use anything else at work.
+But, with animation, we can improve user experience by providing feedback, indicate what will happen next, shifting attention.
 
-## What are CSS transitions?
-- CSS transitions are the easiest form of animation. You have an element with a state A that turns to state B.
-    - Think about a button that changes it's color on hover.
-    - With one line of code, you can change the feeling of the interaction completely.
-- you might have seen code like this before:
+Different options for animation are offered to frontend developers, but I would recommend you to choose CSS whenever possible and only use JavaScript as a last resort, see [rule of least power](https://en.wikipedia.org/wiki/Rule_of_least_power). You'll get a long way with CSS transitions. ✨
+
+
+## What are CSS transitions? 
+CSS transitions are the easiest form of animation – think about a button subtly changing color on hover. Let's start simple:
 
 ```css
 .button {
-	background-color: blue;
-	color: white;
-	transition: background-color 200ms, color 200ms;
+	background-color: rgb(70 70 200 / 100%);
+	transition: background-color 200ms; 👈
 }
 
 .button:hover {
-	background-color: white;
-	color: blue;
+	background-color: rgb(70 70 200 / 90%);
 }
 ```
-Codepen: https://codepen.io/franca_/pen/xxRJozm?editors=1100
 
-TODO: Improve real code example...
+[See Codepen](https://codepen.io/franca_/pen/Yzpogrm)
 
-- BUT – every animation comes at a cost. The browser has to *work* to make animations happen. That's why Wikipedia is so fast - the browser doesn't have much to do.
-
-## Why care about performance of CSS transitions? My Story
-- started professional frontend development
-- happily ever after used `transition: all` (for lazy people)
-- one day, a frontend dev specialized on performance saw my code and told me to NEVER use `transition: all`. It would be bad for performance.
-- I started to research deeper into the performance of transtions
-    - heard about rendering, CPU and GPU before, but:
-        - quickly gave up on this
-        - I don't regret it: it's a giant rabbit hole.
-    - but THIS time, years later, I cared more: A performant page needs less rendering = less energy consumption. 
-        - so even if a page feels fast enough, it's still a good idea to care about performance.
-- I won't dive into the technical aspect of browser rendering because it would really go beyond the scope of this article.
-    - If you're interested, I recommend you the article series by Mariko Kosaka who works at Goole on Chrome. She's a truly inspiring woman, so you should check her out.
-    - After my research, I recommend the following:
-
-<br>
-<br>
-
-**Safe bets for animation: opacity and transform**
-
-<br>
-<br>
-
-## What's so different about opacity and transform?
-
-- they only cause the browser to re-render *once*
-- both can be used as animation "hacks"
-    - they *seem* to animate the element, but in reality it's a fake animation
-
-### opacity
-- the effect is already there from the beginning, only revealed on transtion
-    - because of that, browser doesn't have to re-paint everything
-
-### transform
-- the element *seems* to be moving, but it's not *really* moving
-    - layout doesn't change at all
-    - because of that, layout doesn't have to be re-painted
+Beware that every(!) animation comes at a cost. The browser has to *work* for this. Wikipedia is so fast because the browser doesn't have much to do. 
 
 
----
-## Real-world implementation
+## Improve the performance of CSS transitions 🚀
 
-This sounds grat in theory, but how do you animate with opacity and transform *only* ? Here's a real world example: A sticky header.
+- A fast website is less energy-consuming, thus cheaper and eco-friendlier. 🌱
+- It improves user experience, especially mobile, and SEO positioning.
 
-### Our requirements
-- On scroll, the header has to be sticky but reduce its height to leave more space for the page content
-- A subtle shadow appears on scroll to delimit navigation from content
+In regard to CSS transitions, remember this:
 
-### First version: brute force
+**Strive to use `opacity` and `transform` as sole transition properties.**
+
+
+But... what's so different about opacity and transform?
+
+Both properties can be used as animation "hacks". They *seem* to animate an element, but in reality it's a fake animation. With this, we can get the browser to only re-render *once* instead of continuously. As you'll see, we can change most transitions to using solely opacity / transform!
+
+
+## Real-world example
+
+How do you animate with opacity and transform *only* ? 
+
+We'll animate a sticky header that
+1. reduces its height on scroll to leave more space for the page content
+2. gets a subtle shadow to delimit navigation from content.
+
+Let's begin with a solution I would have implemented before learning about performance:
+
+### Brute force solution 💥
 - animate CSS `height` or `padding` property from hardcoded value x to x - n.
 - animate CSS `box-shadow` from 0 to x.
 
-#### Brute force code example
 Codepen: https://codepen.io/franca_/pen/MWbQQar
 
 The important part, simplified:
 ```css
 .header {
     padding: 30px;
-	transition: padding 300s, box-shadow 300s;
+	transition: padding 300s, box-shadow 300s; /* animation */
 }
 
 /* Same HTML element, but class added with JS on scroll */
 .header--scrolling { 
-    padding: 10px;
-    box-shadow: 0 8px 40px 0 gray;
+    padding: 10px; /* reduced height */
+    box-shadow: 0 8px 40px 0 gray; /* subtle shadow */
 }
 ```
 
 #### What happens behind the scences?
 
-- Every frame, the browser's GPU (graphics processing unit) needs to render the transition's new state:
+Browser rendering is a complex topic. For a deep dive, I recommend you [this article series](https://developers.google.com/web/updates/2018/09/inside-browser-part1) by Mariko Kosaka, an inspiring Google developer.
 
-[[ GPU visualization ]] ✅
+Simplified, the browser's graphics processing unit (GPU) needs to render every new state of our transition:
+
+![GPU is busy on scroll](./assets/bad-gpu.jpg)
 
 [[ GPU Video]] ✅
 
@@ -205,5 +172,14 @@ In the last step, we animate the `transform` of header and nav:
 }
 ```
 
+
+### opacity
+- the effect is already there from the beginning, only revealed on transtion
+    - because of that, browser doesn't have to re-paint everything
+
+### transform
+- the element *seems* to be moving, but it's not *really* moving
+    - layout doesn't change at all
+    - because of that, layout doesn't have to be re-painted
 
 
